@@ -4,7 +4,7 @@
 
 **One-liner: Input a topic, auto-generate content + publish to multiple platforms**
 
-[![License: PolyForm Noncommercial](https://img.shields.io/badge/License-PolyForm%20Noncommercial-orange.svg)](LICENSE)
+[![License: PostSkill](https://img.shields.io/badge/License-PostSkill-orange.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![GitHub Stars](https://img.shields.io/github/stars/AIPMAndy/postskill?style=social)](https://github.com/AIPMAndy/postskill)
 
