@@ -1,0 +1,57 @@
+name: Release Report
+on:
+  workflow_run:
+    workflows: ["Auto Publish"]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion != 'skipped' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            RELEASE_LOG.md
+          sparse-checkout-cone-mode: false
+      
+      - name: Generate Report
+        id: report
+        run: |
+          DATE=$(date -u '+%Y-%m-%d %H:%M')
+          STATUS="${{ github.event.workflow_run.conclusion }}"
+          RUN_URL="${{ github.event.workflow_run.html_url }}"
+          
+          # 格式化状态
+          if [ "$STATUS" = "success" ]; then
+            STATUS_EMOJI="✅ SUCCESS"
+          else
+            STATUS_EMOJI="❌ FAILED"
+          fi
+          
+          # 生成新行
+          NEW_LINE="| $DATE | $STATUS_EMOJI | AI醒觉社 | 微信、小红书 | [查看日志]($RUN_URL) |"
+          
+          # 输出用于后续步骤
+          echo "new_line=$NEW_LINE" >> $GITHUB_OUTPUT
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+      
+      - name: Update Release Log
+        if: ${{ steps.report.outputs.status == 'success' }}
+        run: |
+          # 追加到 RELEASE_LOG.md
+          {
+            echo ""
+            echo "${{ steps.report.outputs.new_line }}"
+          } >> RELEASE_LOG.md
+      
+      - name: Commit and Push
+        if: ${{ steps.report.outputs.status == 'success' }}
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add RELEASE_LOG.md
+          git commit -m "📊 更新发布记录: ${{ github.event.workflow_run.conclusion }}" || echo "No changes to commit"
+          git push

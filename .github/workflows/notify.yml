@@ -1,0 +1,23 @@
+name: Notify on Release
+
+on:
+  workflow_run:
+    workflows: ["Auto Publish"]
+    types: [completed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Success Notification
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        run: |
+          echo "✅ 发布成功通知"
+          # 这里可以添加飞书/钉钉/Slack webhook
+          # curl -X POST "${{ secrets.FEISHU_WEBHOOK_URL }}" ...
+        
+      - name: Send Failure Notification
+        if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+        run: |
+          echo "❌ 发布失败通知"
+          # curl -X POST "${{ secrets.FEISHU_WEBHOOK_URL }}" ...
