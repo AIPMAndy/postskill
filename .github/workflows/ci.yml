@@ -78,15 +78,13 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Check required secrets
+      env:
+        PONYFLASH_API_KEY: ${{ secrets.PONYFLASH_API_KEY }}
       run: |
         echo "🔍 检查生产环境 Secrets..."
         
-        required_secrets=("PONYFLASH_API_KEY")
-        
-        for secret in "${required_secrets[@]}"; do
-          if [ -z "${{ secrets[secret] }}" ]; then
-            echo "⚠️ Secret '$secret' 未设置"
-          else
-            echo "✅ Secret '$secret' 已配置"
-          fi
-        done
+        if [ -z "$PONYFLASH_API_KEY" ]; then
+          echo "⚠️ Secret 'PONYFLASH_API_KEY' 未设置"
+        else
+          echo "✅ Secret 'PONYFLASH_API_KEY' 已配置"
+        fi
