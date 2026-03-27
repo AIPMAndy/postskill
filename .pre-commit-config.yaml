@@ -1,0 +1,57 @@
+# Pre-commit hooks - 本地提交前自动检查
+# 安装: pip install pre-commit && pre-commit install
+# 文档: https://pre-commit.com/
+
+repos:
+  # 基础文件检查
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace        # 去除行尾空格
+      - id: end-of-file-fixer          # 确保文件末尾有空行
+      - id: check-yaml                 # YAML 语法检查
+      - id: check-json                 # JSON 语法检查
+      - id: check-toml                 # TOML 语法检查
+      - id: check-added-large-files    # 防止提交大文件
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict       # 检查是否有合并冲突标记
+      - id: check-case-conflict        # 检查文件名大小写冲突
+      - id: detect-private-key         # 检测是否有私钥
+      - id: forbid-new-submodules      # 禁止添加子模块
+
+  # Python 代码格式化
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        language_version: python3.10
+        args: ['--line-length=100']
+
+  # Python import 排序
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ['--profile=black', '--line-length=100']
+
+  # Python Lint
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.3.4
+    hooks:
+      - id: ruff
+        args: ['--fix', '--exit-non-zero-on-fix']
+
+  # GitHub Actions 语法检查
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.6.27
+    hooks:
+      - id: actionlint
+        name: Check GitHub Actions workflow files
+
+  # 安全扫描
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.8
+    hooks:
+      - id: bandit
+        args: ['-c', 'pyproject.toml']
+        additional_dependencies: ['bandit[toml]']
