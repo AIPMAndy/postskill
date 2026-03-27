@@ -6,7 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  # 先运行 CI 检查
+  ci:
+    uses: ./.github/workflows/ci.yml
+  
   publish:
+    needs: ci  # 确保 CI 通过才发布
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,6 +59,14 @@ jobs:
             --publish \
             --platforms wechat,xiaohongshu
       
+      - name: Create success summary
+        if: success()
+        run: |
+          echo "✅ 发布成功!" >> $GITHUB_STEP_SUMMARY
+          echo "- 时间: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- 主题: AI醒觉社" >> $GITHUB_STEP_SUMMARY
+          echo "- 平台: 微信、小红书" >> $GITHUB_STEP_SUMMARY
+      
       - name: Notify on failure
         if: failure()
         uses: actions/github-script@v7
@@ -62,7 +75,7 @@ jobs:
             const issue = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `❌ 发布失败: ${new Date().toISOString()}`,
-              body: `工作流运行失败，请查看日志: ${context.payload.repository.html_url}/actions/runs/${context.runId}`
+              title: `❌ 发布失败: ${new Date().toISOString().split('T')[0]}`,
+              body: `## 自动发布失败\n\n- 工作流: ${context.workflow}\n- 运行: ${context.runId}\n- 查看日志: ${context.payload.repository.html_url}/actions/runs/${context.runId}\n\n请检查:\n1. PONYFLASH_API_KEY 是否有效\n2. 平台 API 是否正常\n3. 网络连接`
             });
             console.log(`Created issue #${issue.data.number}`);
