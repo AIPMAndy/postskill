@@ -9,12 +9,36 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+      
+      - name: Pre-flight Check
+        run: |
+          echo "🔍 检查必要配置..."
+          
+          # 检查 Secrets
+          if [ -z "${{ secrets.PONYFLASH_API_KEY }}" ]; then
+            echo "❌ PONYFLASH_API_KEY 未设置"
+            echo "请前往 Settings → Secrets → Actions 添加 PONYFLASH_API_KEY"
+            exit 1
+          fi
+          echo "✅ PONYFLASH_API_KEY 已配置"
+          
+          # 检查 Python 版本
+          python --version
+          echo "✅ Python 环境正常"
+      
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       
       - name: Install dependencies
         run: |
@@ -22,8 +46,23 @@ jobs:
           playwright install chromium
       
       - name: Run publisher
+        env:
+          PONYFLASH_API_KEY: ${{ secrets.PONYFLASH_API_KEY }}
         run: |
           python postskill.py run \
             --topic "AI醒觉社" \
             --publish \
             --platforms wechat,xiaohongshu
+      
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `❌ 发布失败: ${new Date().toISOString()}`,
+              body: `工作流运行失败，请查看日志: ${context.payload.repository.html_url}/actions/runs/${context.runId}`
+            });
+            console.log(`Created issue #${issue.data.number}`);
