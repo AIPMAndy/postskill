@@ -1,20 +1,21 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: '[FEATURE] '
+about: Suggest a workflow, platform adapter, content strategy layer, or review feature
+title: "[Feature] "
 labels: enhancement
 assignees: ''
-
 ---
 
-**Is your feature request related to a problem?**
-A clear and concise description of what the problem is.
+## What workflow do you want to automate?
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## Which stage does it affect?
+- [ ] copy generation
+- [ ] image generation
+- [ ] review materials
+- [ ] platform publishing
+- [ ] workflow automation
+- [ ] analytics / reporting
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features.
+## Why does it matter?
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## What would a good MVP look like?

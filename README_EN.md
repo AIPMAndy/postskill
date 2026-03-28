@@ -155,6 +155,8 @@ If this is your first time here, start with:
 3. `scripts/image_generator.py` — image generation integration
 4. `scripts/feishu_doc_creator.py` — review material generation
 5. `.github/workflows/auto-publish.yml` — automation chain
+6. [examples/ai-awakening-output.md](./examples/ai-awakening-output.md) — a demo case you can show
+7. [LAUNCH_PACK.md](./LAUNCH_PACK.md) — ready-to-use launch copy
 
 ---
 

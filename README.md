@@ -155,6 +155,8 @@ python postskill.py create-doc --content ./output/copies.json --images ./output/
 3. `scripts/image_generator.py` — 图片生成接入
 4. `scripts/feishu_doc_creator.py` — 图文素材文档输出
 5. `.github/workflows/auto-publish.yml` — 自动化链路
+6. [examples/ai-awakening-output.md](./examples/ai-awakening-output.md) — 一组可展示 demo
+7. [LAUNCH_PACK.md](./LAUNCH_PACK.md) — 可直接拿去发的传播文案
 
 ---
 
