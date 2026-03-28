@@ -5,6 +5,9 @@ on:
     types: [completed]
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   report:
     runs-on: ubuntu-latest

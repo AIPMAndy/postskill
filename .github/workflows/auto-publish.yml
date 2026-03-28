@@ -5,6 +5,10 @@ on:
     - cron: '0 9 * * *'  # 每天上午9点
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   # 先运行测试检查
   test:
