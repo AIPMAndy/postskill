@@ -5,6 +5,9 @@ on:
     workflows: ["Auto Publish"]
     types: [completed]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   notify:
     runs-on: ubuntu-latest

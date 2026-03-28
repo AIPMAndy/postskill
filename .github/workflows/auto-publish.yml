@@ -5,6 +5,9 @@ on:
     - cron: '0 9 * * *'  # 每天上午9点
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   issues: write
