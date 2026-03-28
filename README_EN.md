@@ -1,171 +1,211 @@
 <div align="center">
 
-# 🚀 PostSkill
+# 🪄 PostSkill
 
-**One-liner: Input a topic, auto-generate content + publish to multiple platforms**
+**Input a topic, automatically generate multiple copy variants, image outputs, and review-ready content materials.**  
+**This is a content production pipeline prototype — not just another copywriting script.**
 
-[![License: PostSkill](https://img.shields.io/badge/License-PostSkill-orange.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![GitHub Stars](https://img.shields.io/github/stars/AIPMAndy/postskill?style=social)](https://github.com/AIPMAndy/postskill)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![CI](https://img.shields.io/github/actions/workflow/status/AIPMAndy/postskill/ci.yml?branch=main&label=CI)](https://github.com/AIPMAndy/postskill/actions)
+[![Auto Publish](https://img.shields.io/badge/Workflow-Auto%20Publish-brightgreen)](./.github/workflows/auto-publish.yml)
 
-**English** | [简体中文](README.md)
-
-<img src="assets/demo.gif" width="700" alt="PostSkill Demo">
-
-*End-to-end batch content production and auto-publishing tool*
+[简体中文](./README.md) | **English**
 
 </div>
 
 ---
 
-## 🆚 Why PostSkill?
+## What is this?
 
-| Capability | Manual | Other Tools | **PostSkill** |
-|------------|:------:|:-----------:|:-------------:|
-| Copy Generation | ❌ Manual | ⚠️ Single style | ✅ **Multi-style batch** |
-| Image Generation | ❌ Find/design | ⚠️ Manual pairing | ✅ **AI auto-match** |
-| Content Review | ❌ Local files | ⚠️ Scattered | ✅ **Feishu collaboration** |
-| Multi-platform | ❌ Login one-by-one | ⚠️ API limits | ✅ **Browser automation** |
-| End-to-end | ❌ Multiple tools | ❌ Partial | ✅ **One-click complete** |
+`PostSkill` is an **automation prototype for content production and publishing workflows**.
 
-**Key Difference**: Not just a tool, but a complete "content production pipeline"
+It is not mainly trying to solve “generate one more AI caption.” It is trying to connect the whole chain:
+
+> input a topic → generate multiple content styles → create images → organize review-ready materials → connect into downstream publishing.
+
+At its current stage, it is best understood as a **working MVP for a content pipeline**, not a fully polished SaaS product.
 
 ---
 
-## 🚀 Quick Start (30 seconds)
+## What problem does it solve?
+
+The annoying part of content work is rarely “write one post.” It is the repeated operational layer around it:
+
+- one topic needs multiple stylistic angles
+- each version needs matching imagery
+- teams need something reviewable and editable
+- publishing is another step after asset generation
+
+That is why PostSkill matters as a pipeline, not as a single-point tool.
+
+**It turns content production from disconnected actions into a connected workflow.**
+
+---
+
+## What the current version can actually do
+
+This section only describes what the repository **actually implements today**.
+
+### Implemented
+- ✅ Generate multiple copy variants from a topic via CLI
+- ✅ Call PonyFlash to generate matching images
+- ✅ Produce Markdown materials that pair copy with images
+- ✅ Run automation through GitHub Actions workflows
+- ✅ Include publishing workflow scaffolding and health checks
+
+### Still prototype / in progress
+- ⚠️ Platform publishers are still mostly adapter scaffolding, not a fully mature publish system
+- ⚠️ Feishu is currently centered around generating reviewable materials, not a deep end-to-end publishing integration
+- ⚠️ Some old README / command references used to promise more than the code delivered; this version intentionally tightens the story to match the repo
+
+In one sentence:
+
+**Right now, this repo is best positioned as a content automation pipeline prototype, not a fully finished one-click cross-platform publisher.**
+
+---
+
+## Why this project is valuable
+
+Many tools solve only one piece:
+
+- copy only
+- image only
+- publish only
+- document organization only
+
+PostSkill tries to connect them.
+
+| Capability | Single-point tools | **PostSkill** |
+|---|---|---|
+| Multi-style copy | ✅ | ✅ |
+| AI image generation | Sometimes | ✅ |
+| Material organization | Usually manual | ✅ |
+| Workflow chaining | Rare | ✅ |
+| Automation execution | Rare | ✅ |
+
+So the real pitch here is not “copywriting magic.” It is:
+
+> **a content production automation pipeline.**
+
+---
+
+## 30-second quick start
 
 ```bash
-# 1. Install (one command)
-codex skill install postskill
-
-# 2. Configure platforms (first time)
-postskill config --platform wechat
-postskill config --platform xiaohongshu
-
-# 3. Generate and publish
-postskill run --topic "AI Awakening" --publish --platforms wechat,xiaohongshu
+git clone https://github.com/AIPMAndy/postskill.git
+cd postskill
+pip install -r requirements.txt
+playwright install chromium
 ```
 
-**Done!** You get:
-- ✅ 3-10 sets of copy in different styles
-- ✅ AI-generated images for each set
-- ✅ Feishu document with copy-image pairs
-- ✅ Published to specified platforms
+### Generate a full batch of content materials
+
+```bash
+python postskill.py run --topic "AI Awakening"
+```
+
+This will:
+- generate multiple copy variants
+- attempt to generate images
+- output a Markdown material file pairing copy and images
+
+### Generate copy only
+
+```bash
+python postskill.py generate --topic "AI Awakening" --output ./output
+```
+
+### Generate images only
+
+```bash
+python postskill.py generate-images --config ./output/copies.json --output ./output/images
+```
+
+### Generate review materials
+
+```bash
+python postskill.py create-doc --content ./output/copies.json --images ./output/images --output ./output
+```
 
 ---
 
-## 📖 Core Features
+## Core modules
 
-### 1️⃣ Copy Generation (Multi-style)
-
-Auto-generate copy in multiple styles based on your topic:
-
-| Style | Characteristics | Best For |
-|-------|-----------------|----------|
-| 📚 Educational | Dense knowledge, practical | Professional sharing |
-| 📖 Storytelling | Narrative-driven, emotional | Personal branding |
-| ✨ Quote-style | Punchy, shareable | Social media |
-| 📊 Data-driven | Numbers-backed, authoritative | Industry analysis |
-| ⚖️ Comparison | Before/after, results | Product promotion |
-
-### 2️⃣ Image Generation (AI-powered)
-
-Generate matching images for each copy set using PonyFlash:
-
-- **Size**: 768×1024px (3:4 vertical, mobile-optimized)
-- **Resolution**: 2K HD
-- **Model**: nano-banana-pro
-- **Style**: Auto-matched to copy tone
-
-### 3️⃣ Feishu Document (Collaborative Review)
-
-Auto-create Feishu documents with copy-image pairs:
-
+```text
+.
+├── postskill.py                  # CLI entrypoint
+├── scripts/
+│   ├── copy_generator.py         # multi-style copy generation
+│   ├── image_generator.py        # PonyFlash image generation
+│   ├── feishu_doc_creator.py     # review material generation
+│   └── publisher.py              # publishing scaffolding
+├── tests/
+└── .github/workflows/            # CI / health / automation workflows
 ```
-📄 Document Structure
-├── Topic: XXX
-├── Copy 1 + Image 1
-├── Copy 2 + Image 2
-├── Copy 3 + Image 3
-└── [One-click Publish] Button
-```
-
-### 4️⃣ Auto Publish (Browser Automation)
-
-Supported platforms:
-
-- ✅ WeChat Official Account
-- ✅ Xiaohongshu (Little Red Book)
-- 🚧 TikTok (in development)
-- 🚧 Weibo (in development)
 
 ---
 
-## 💡 Use Cases
+## Best places to start
 
-### Case 1: Content Matrix for Official Accounts
-Input weekly topics, batch generate 5-10 articles, schedule publishing. Build a content moat.
+If this is your first time here, start with:
 
-### Case 2: Viral Content Testing for Xiaohongshu
-Input keywords, generate multiple content sets, quickly test which direction goes viral.
-
-### Case 3: Social Media Asset Library
-Batch generate quotes + images, build a personal asset library for quick access.
-
-### Case 4: Community Operations
-Auto-generate weekly community content, maintain activity without worrying about what to post.
+1. `postskill.py` — the CLI flow
+2. `scripts/copy_generator.py` — multi-style copy generation
+3. `scripts/image_generator.py` — image generation integration
+4. `scripts/feishu_doc_creator.py` — review material generation
+5. `.github/workflows/auto-publish.yml` — automation chain
 
 ---
 
-## 🗺️ Roadmap
+## Who this is for
+
+- creators and operators who want a repeatable content workflow
+- people building AI-assisted media pipelines
+- builders who want to connect PonyFlash, Feishu, and publishing automation
+- developers who want a working prototype to extend
+
+---
+
+## Roadmap
 
 - [x] Multi-style copy generation
 - [x] AI image generation
-- [x] Auto Feishu document creation
-- [x] WeChat Official Account auto-publish
-- [x] Xiaohongshu auto-publish
-- [ ] TikTok auto-publish
-- [ ] Weibo auto-publish
-- [ ] Scheduled publishing
-- [ ] Analytics dashboard
-- [ ] Viral content template library
+- [x] Material document generation
+- [x] GitHub Actions automation chain
+- [ ] Fully implemented platform publishers
+- [ ] More stable account/session management
+- [ ] Publish result tracking and dashboards
+- [ ] More platform adapters
+- [ ] Stronger template and strategy layers
 
 ---
 
-## 📚 Documentation
+## Contributing
 
-- [Quick Start Guide](docs/quickstart.md)
-- [Configuration](docs/config.md)
-- [API Docs](docs/api.md)
-- [FAQ](docs/faq.md)
+Contributions are especially welcome in:
 
----
+- platform publishing adapters
+- better copy templates
+- more robust image generation / retry logic
+- stronger review workflows
+- real demos and case studies
 
-## 👨‍💻 Author
-
-**AI酋长Andy**
-
-Former AI Product Expert at Tencent/Baidu, now AI Business Strategy Consultant.
-
-Focus: AI + Content Production, AI + Automated Customer Acquisition
-
-[![WeChat](https://img.shields.io/badge/WeChat-AIPMAndy-brightgreen.svg)](https://github.com/AIPMAndy)
-[![GitHub](https://img.shields.io/badge/GitHub-AIPMAndy-black.svg)](https://github.com/AIPMAndy)
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
-## 🤝 Contributing
+## License
 
-Issues and PRs welcome!
-
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+Apache-2.0
 
 ---
 
-<div align="center">
+## If this project helps you
 
-**If this helps, please give it a ⭐ Star!**
+Please do two simple things:
 
-[![Star History Chart](https://api.star-history.com/svg?repos=AIPMAndy/postskill&type=Date)](https://star-history.com/#AIPMAndy/postskill&Date)
+1. give it a **⭐ Star**
+2. open an issue describing the content workflow you actually want to automate
 
-</div>
+That is the fastest path from prototype to useful system.

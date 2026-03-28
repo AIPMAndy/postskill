@@ -1,171 +1,211 @@
 <div align="center">
 
-# 🚀 PostSkill
+# 🪄 PostSkill
 
-**一句话：输入主题，自动生成图文 + 一键发布到多平台**
+**输入一个主题，自动生成多套文案、配图占位结果，并整理成可审核的 Markdown / 飞书协作素材。**  
+**这是一个内容生产流水线原型，不只是一个文案生成脚本。**
 
-[![License: PostSkill](https://img.shields.io/badge/License-PostSkill-orange.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![GitHub Stars](https://img.shields.io/github/stars/AIPMAndy/postskill?style=social)](https://github.com/AIPMAndy/postskill)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![CI](https://img.shields.io/github/actions/workflow/status/AIPMAndy/postskill/ci.yml?branch=main&label=CI)](https://github.com/AIPMAndy/postskill/actions)
+[![Auto Publish](https://img.shields.io/badge/Workflow-Auto%20Publish-brightgreen)](./.github/workflows/auto-publish.yml)
 
-[English](README_EN.md) | **简体中文**
-
-<img src="assets/demo.gif" width="700" alt="PostSkill Demo">
-
-*端到端图文批量生产与自动发布工具*
+**简体中文** | [English](./README_EN.md)
 
 </div>
 
 ---
 
-## 🆚 为什么选 PostSkill？
+## 这是什么
 
-| 能力 | 手动操作 | 其他工具 | **PostSkill** |
-|------|:--------:|:--------:|:-------------:|
-| 文案生成 | ❌ 人工写 | ⚠️ 单一风格 | ✅ **多风格批量生成** |
-| 配图生成 | ❌ 找图/设计 | ⚠️ 需手动配 | ✅ **AI自动配图** |
-| 内容审核 | ❌ 本地文件 | ⚠️ 分散管理 | ✅ **飞书文档协作** |
-| 多平台发布 | ❌ 逐个登录 | ⚠️ API限制多 | ✅ **浏览器自动化** |
-| 端到端流程 | ❌ 多个工具 | ❌ 部分覆盖 | ✅ **一键完成** |
+`PostSkill` 是一个 **面向内容生产与发布流程的自动化原型**。
 
-**核心差异**：不是单个工具，是完整的「内容生产流水线」
+它想解决的不是“再生成一段 AI 文案”，而是把这条链路先串起来：
+
+> 输入主题 → 生成多风格文案 → 配图 → 整理成可审核素材 → 再接后续发布动作。
+
+它当前更像一个 **可运行的内容流水线 MVP**，而不是已经完全打磨好的 SaaS 产品。
 
 ---
 
-## 🚀 30秒快速开始
+## 它解决什么问题
+
+做内容最烦的，通常不是“写一篇文案”，而是这些重复动作：
+
+- 一个主题要拆多套风格
+- 每套内容要配图
+- 团队要先看、先改、先审核
+- 最后还要再发到平台
+
+所以 PostSkill 的价值不是单点能力，而是：
+
+**把内容生产从离散动作，拉成一个连续流程。**
+
+---
+
+## 当前版本真实能做什么
+
+这里我只写仓库里**当前真实具备**的能力：
+
+### 已实现
+- ✅ 命令行输入主题，生成多套不同风格文案
+- ✅ 调用 PonyFlash 为文案生成配图
+- ✅ 生成图文对照的 Markdown 素材文档
+- ✅ 基于 GitHub Actions 跑自动化流程
+- ✅ 已有自动发布工作流骨架与健康检查
+
+### 还在原型 / 开发中
+- ⚠️ 平台发布器还主要是接口骨架，不是完整成熟发布系统
+- ⚠️ 飞书目前核心是生成可协作素材文档，不是完整深度集成发布平台
+- ⚠️ README 之前提到的一些命令 / docs 页面，在旧版本里和实际代码不完全一致，这次我已经按真实状态重新收敛叙事
+
+一句话：
+
+**它现在最像“内容自动化流水线原型”，而不是“已经全平台一键发布的成熟产品”。**
+
+---
+
+## 为什么这项目有价值
+
+因为很多内容工具只解决一个点：
+
+- 只会写文案
+- 只会出图
+- 只会发平台
+- 只会做文档整理
+
+而 PostSkill 在做的，是把这些点接起来。
+
+| 能力 | 单点工具 | **PostSkill** |
+|---|---|---|
+| 多风格文案 | ✅ | ✅ |
+| AI 配图 | 有的支持 | ✅ |
+| 素材整理 | 通常手动 | ✅ |
+| 流程串联 | 少 | ✅ |
+| 自动化执行 | 少 | ✅ |
+
+所以这个项目真正该卖的，不是“文案神器”，而是：
+
+> **内容生产自动化 pipeline。**
+
+---
+
+## 30 秒快速开始
 
 ```bash
-# 1. 安装（一行命令）
-codex skill install postskill
-
-# 2. 配置平台账号（首次）
-postskill config --platform wechat
-postskill config --platform xiaohongshu
-
-# 3. 一键生成并发布
-postskill run --topic "AI醒觉社" --publish --platforms wechat,xiaohongshu
+git clone https://github.com/AIPMAndy/postskill.git
+cd postskill
+pip install -r requirements.txt
+playwright install chromium
 ```
 
-**完成！** 你会得到：
-- ✅ 3-10 套不同风格文案
-- ✅ 每套配套 AI 生成图片
-- ✅ 图文对照的飞书文档
-- ✅ 已发布到指定平台
+### 生成整套内容素材
+
+```bash
+python postskill.py run --topic "AI醒觉社"
+```
+
+这会做几件事：
+- 生成多套文案
+- 尝试生成配图
+- 输出图文整理后的 Markdown 文件
+
+### 只生成文案
+
+```bash
+python postskill.py generate --topic "AI醒觉社" --output ./output
+```
+
+### 只生成图片
+
+```bash
+python postskill.py generate-images --config ./output/copies.json --output ./output/images
+```
+
+### 生成素材文档
+
+```bash
+python postskill.py create-doc --content ./output/copies.json --images ./output/images --output ./output
+```
 
 ---
 
-## 📖 核心功能
+## 核心模块
 
-### 1️⃣ 文案生成（多风格）
-
-基于主题自动生成多种风格文案：
-
-| 风格 | 特点 | 适用场景 |
-|------|------|----------|
-| 📚 干货型 | 知识点密集，实用性强 | 专业领域分享 |
-| 📖 故事型 | 叙事驱动，情感共鸣 | 个人IP打造 |
-| ✨ 金句型 | 短句有力，易于传播 | 朋友圈/小红书 |
-| 📊 数据型 | 数据支撑，权威可信 | 行业分析 |
-| ⚖️ 对比型 | 前后对比，效果突出 | 产品推广 |
-
-### 2️⃣ 配图生成（AI驱动）
-
-调用 PonyFlash 为每套文案生成配套图片：
-
-- **尺寸**: 768×1024px (3:4 竖版，适合移动端)
-- **分辨率**: 2K 高清
-- **模型**: nano-banana-pro
-- **风格**: 自动匹配文案调性
-
-### 3️⃣ 飞书文档（协作审核）
-
-自动创建图文对照的飞书文档：
-
+```text
+.
+├── postskill.py                  # CLI 主入口
+├── scripts/
+│   ├── copy_generator.py         # 多风格文案生成
+│   ├── image_generator.py        # PonyFlash 配图生成
+│   ├── feishu_doc_creator.py     # 素材文档生成
+│   └── publisher.py              # 平台发布骨架
+├── tests/
+└── .github/workflows/            # 自动化发布 / CI / 健康检查
 ```
-📄 飞书文档结构
-├── 主题：XXX
-├── 文案1 + 配图1
-├── 文案2 + 配图2
-├── 文案3 + 配图3
-└── [一键发布] 按钮
-```
-
-### 4️⃣ 自动发布（浏览器自动化）
-
-支持平台：
-
-- ✅ 微信公众号
-- ✅ 小红书
-- 🚧 抖音（开发中）
-- 🚧 微博（开发中）
 
 ---
 
-## 💡 使用场景
+## 当前最值得看的地方
 
-### 场景1：公众号内容矩阵
-每周输入主题，批量生成 5-10 篇图文，定时发布，建立内容护城河。
+如果你第一次打开这个项目，建议优先看：
 
-### 场景2：小红书爆款测试
-输入关键词，生成多套内容，快速测试哪个方向容易爆。
-
-### 场景3：朋友圈素材库
-批量生成金句+配图，建立个人素材库，随时取用。
-
-### 场景4：社群运营
-每周自动生成社群分享内容，保持活跃度，不用愁没东西发。
+1. `postskill.py` — CLI 主流程
+2. `scripts/copy_generator.py` — 多风格文案生成
+3. `scripts/image_generator.py` — 图片生成接入
+4. `scripts/feishu_doc_creator.py` — 图文素材文档输出
+5. `.github/workflows/auto-publish.yml` — 自动化链路
 
 ---
 
-## 🗺️ Roadmap
+## 适合谁
+
+- 想把“内容生产”做成流水线的人
+- 运营 / 创作者 / AI 工作流玩家
+- 想把 PonyFlash、飞书、自动化发布串起来的人
+- 想基于一个可运行原型继续往上搭系统的人
+
+---
+
+## Roadmap
 
 - [x] 多风格文案生成
 - [x] AI 配图生成
-- [x] 飞书文档自动创建
-- [x] 微信公众号自动发布
-- [x] 小红书自动发布
-- [ ] 抖音自动发布
-- [ ] 微博自动发布
-- [ ] 定时发布功能
-- [ ] 数据分析看板
-- [ ] 爆款内容模板库
+- [x] 素材文档自动整理
+- [x] GitHub Actions 自动化链路
+- [ ] 完整平台发布器落地
+- [ ] 更稳定的平台账号管理
+- [ ] 发布结果回收与看板
+- [ ] 更多平台适配
+- [ ] 更强的模板库与内容策略层
 
 ---
 
-## 📚 完整文档
+## 贡献
 
-- [快速开始指南](docs/quickstart.md)
-- [配置说明](docs/config.md)
-- [API 文档](docs/api.md)
-- [常见问题](docs/faq.md)
+欢迎补充：
 
----
+- 平台发布适配器
+- 更强的文案模板
+- 更稳的图片生成与重试策略
+- 更完善的素材审核流程
+- 更真实的 demo / case
 
-## 👨‍💻 作者
-
-**AI酋长Andy**
-
-前腾讯/百度 AI 产品专家，现 AI 商业战略顾问。
-
-专注：AI + 内容生产、AI + 自动化获客
-
-[![微信](https://img.shields.io/badge/微信-AIPMAndy-brightgreen.svg)](https://github.com/AIPMAndy)
-[![GitHub](https://img.shields.io/badge/GitHub-AIPMAndy-black.svg)](https://github.com/AIPMAndy)
+详见 [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
-## 🤝 贡献
+## License
 
-欢迎提交 Issue 和 PR！
-
-详见 [CONTRIBUTING.md](CONTRIBUTING.md)
+Apache-2.0
 
 ---
 
-<div align="center">
+## 如果这个项目对你有帮助
 
-**如果有帮助，请给个 ⭐ Star！**
+请直接：
 
-[![Star History Chart](https://api.star-history.com/svg?repos=AIPMAndy/postskill&type=Date)](https://star-history.com/#AIPMAndy/postskill&Date)
+1. 给它一个 **⭐ Star**
+2. 提一个你真正想打通的内容工作流场景
 
-</div>
+这样这个项目会更快从原型，长成真正有用的工具。
