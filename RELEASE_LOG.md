@@ -10,3 +10,5 @@ RELEASE_LOG = []
 2026-03-27 12:00 | ✅ SUCCESS | AI醒觉社 | 微信、小红书 | 首次自动发布
 2026-03-27 09:00 | ❌ FAILED | AI醒觉社 | 微信、小红书 | PONYFLASH_API_KEY 未配置
 | 2026-03-28 15:01 | ✅ SUCCESS | AI醒觉社 | 微信、小红书 | [查看日志](https://github.com/AIPMAndy/postskill/actions/runs/23687809727) |
+
+| 2026-03-29 09:41 | ✅ SUCCESS | AI醒觉社 | 微信、小红书 | [查看日志](https://github.com/AIPMAndy/postskill/actions/runs/23706253847) |
