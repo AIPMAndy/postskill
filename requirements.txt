@@ -1,26 +1,15 @@
-# PostSkill Dependencies
+# PostSkill 依赖
 
-# Core
-pydantic>=2.0.0
+# 核心依赖
 click>=8.0.0
-pyyaml>=6.0
-python-dotenv>=1.0.0
+openai>=1.0.0
+ponyflash>=0.1.0
+requests>=2.28.0
 
-# Image Generation
-ponyflash>=0.2.2
-
-# Browser Automation
+# 可选依赖
 playwright>=1.40.0
 
-# Scheduling
-apscheduler>=3.10.0
-
-# HTTP Client
-httpx>=0.25.0
-
-# Feishu API
-# Note: Using OpenClaw's built-in feishu tools
-
-# Testing
+# 开发依赖
 pytest>=7.0.0
-pytest-asyncio>=0.21.0
+pytest-cov>=4.0.0
+black>=23.0.0
