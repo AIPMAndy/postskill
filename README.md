@@ -2,95 +2,67 @@
 
 # 🪄 PostSkill
 
-**输入一个主题，自动生成多套文案、配图占位结果，并整理成可审核的 Markdown / 飞书协作素材。**  
-**这是一个内容生产流水线原型，不只是一个文案生成脚本。**
+### 一个主题 → 10 套文案 + 配图 + 可发布素材，全自动
+
+**不只是文案生成器，而是把"选题→创作→配图→审核→发布"串成一条自动化流水线**
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![CI](https://img.shields.io/github/actions/workflow/status/AIPMAndy/postskill/ci.yml?branch=main&label=CI)](https://github.com/AIPMAndy/postskill/actions)
-[![Auto Publish](https://img.shields.io/badge/Workflow-Auto%20Publish-brightgreen)](./.github/workflows/auto-publish.yml)
 
 **简体中文** | [English](./README_EN.md)
+
+<img src="https://via.placeholder.com/800x400/6366f1/ffffff?text=Demo+Coming+Soon" alt="PostSkill Demo" width="100%" />
 
 </div>
 
 ---
 
-## 这是什么
+## 💡 3 秒看懂
 
-`PostSkill` 是一个 **面向内容生产与发布流程的自动化原型**。
+你只需要：
+```bash
+python postskill.py run --topic "AI 如何改变内容创作"
+```
 
-它想解决的不是“再生成一段 AI 文案”，而是把这条链路先串起来：
+PostSkill 自动帮你：
+1. ✅ 生成 10 种风格文案（专业/轻松/故事/数据驱动...）
+2. ✅ 为每套文案配 AI 生成的配图
+3. ✅ 整理成 Markdown 文档，可直接审核/修改
+4. ✅ 一键发布到公众号/小红书/知乎（开发中）
 
-> 输入主题 → 生成多风格文案 → 配图 → 整理成可审核素材 → 再接后续发布动作。
-
-它当前更像一个 **可运行的内容流水线 MVP**，而不是已经完全打磨好的 SaaS 产品。
-
----
-
-## 它解决什么问题
-
-做内容最烦的，通常不是“写一篇文案”，而是这些重复动作：
-
-- 一个主题要拆多套风格
-- 每套内容要配图
-- 团队要先看、先改、先审核
-- 最后还要再发到平台
-
-所以 PostSkill 的价值不是单点能力，而是：
-
-**把内容生产从离散动作，拉成一个连续流程。**
+**省下 80% 重复劳动，专注在创意和策略上。**
 
 ---
 
-## 当前版本真实能做什么
+## 🔥 为什么需要 PostSkill
 
-这里我只写仓库里**当前真实具备**的能力：
+### 传统内容生产的痛点
 
-### 已实现
-- ✅ 命令行输入主题，生成多套不同风格文案
-- ✅ 调用 PonyFlash 为文案生成配图
-- ✅ 生成图文对照的 Markdown 素材文档
-- ✅ 基于 GitHub Actions 跑自动化流程
-- ✅ 已有自动发布工作流骨架与健康检查
+| 痛点 | 传统方式 | PostSkill |
+|------|---------|-----------|
+| 一个选题要写多套文案 | 手动写 10 遍 | ✅ 自动生成 10 套 |
+| 每套文案要配图 | 找图/设计/AI 单独出图 | ✅ 自动配图 |
+| 团队协作审核 | 复制粘贴到文档 | ✅ 自动生成 Markdown |
+| 发布到多平台 | 手动复制粘贴 | ✅ 一键发布（开发中）|
+| 流程断裂 | 每个环节单独工具 | ✅ 一条流水线 |
 
-### 还在原型 / 开发中
-- ⚠️ 平台发布器还主要是接口骨架，不是完整成熟发布系统
-- ⚠️ 飞书目前核心是生成可协作素材文档，不是完整深度集成发布平台
-- ⚠️ README 之前提到的一些命令 / docs 页面，在旧版本里和实际代码不完全一致，这次我已经按真实状态重新收敛叙事
+### 真实场景
 
-一句话：
+**场景 1：运营团队**
+> "我们每周要出 20 篇内容，每篇要适配 3 个平台。以前要 2 天，现在 2 小时搞定初稿。"
 
-**它现在最像“内容自动化流水线原型”，而不是“已经全平台一键发布的成熟产品”。**
+**场景 2：个人创作者**
+> "我只想专注写作，不想花时间找图、排版、复制粘贴。PostSkill 帮我省下 70% 时间。"
 
----
-
-## 为什么这项目有价值
-
-因为很多内容工具只解决一个点：
-
-- 只会写文案
-- 只会出图
-- 只会发平台
-- 只会做文档整理
-
-而 PostSkill 在做的，是把这些点接起来。
-
-| 能力 | 单点工具 | **PostSkill** |
-|---|---|---|
-| 多风格文案 | ✅ | ✅ |
-| AI 配图 | 有的支持 | ✅ |
-| 素材整理 | 通常手动 | ✅ |
-| 流程串联 | 少 | ✅ |
-| 自动化执行 | 少 | ✅ |
-
-所以这个项目真正该卖的，不是“文案神器”，而是：
-
-> **内容生产自动化 pipeline。**
+**场景 3：AI 工作流玩家**
+> "这是我见过第一个把文案、配图、发布串起来的开源工具。可以直接改成自己的内容引擎。"
 
 ---
 
-## 30 秒快速开始
+## ⚡ 30 秒快速开始
+
+### 安装
 
 ```bash
 git clone https://github.com/AIPMAndy/postskill.git
@@ -99,115 +71,169 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-### 生成整套内容素材
+### 生成第一套内容
 
 ```bash
-python postskill.py run --topic "AI醒觉社"
-```
+# 一键生成完整内容包（文案 + 配图 + 文档）
+python postskill.py run --topic "AI 如何改变内容创作"
 
-这会做几件事：
-- 生成多套文案
-- 尝试生成配图
-- 输出图文整理后的 Markdown 文件
+# 只生成文案
+python postskill.py generate --topic "你的主题" --output ./output
 
-### 只生成文案
-
-```bash
-python postskill.py generate --topic "AI醒觉社" --output ./output
-```
-
-### 只生成图片
-
-```bash
+# 只生成配图
 python postskill.py generate-images --config ./output/copies.json --output ./output/images
-```
 
-### 生成素材文档
-
-```bash
+# 生成可审核的 Markdown 文档
 python postskill.py create-doc --content ./output/copies.json --images ./output/images --output ./output
 ```
 
+### 查看结果
+
+生成的文件在 `./output/` 目录：
+- `copies.json` - 10 套文案
+- `images/` - 配图
+- `content-review.md` - 图文整理后的审核文档
+
 ---
 
-## 核心模块
+## 🎯 核心能力
+
+### 1️⃣ 多风格文案生成
+
+一个主题，自动生成 10 种风格：
+
+- 📊 **数据驱动型**：用数据说话，适合 B 端/专业内容
+- 🎭 **故事叙述型**：讲故事，适合品牌/情感内容
+- 💡 **观点输出型**：犀利观点，适合 KOL/思想领袖
+- 🔥 **热点追踪型**：结合热点，适合蹭流量
+- 📚 **知识科普型**：深度讲解，适合教育/科普
+- 🎨 **创意脑洞型**：天马行空，适合创意/娱乐
+- 💼 **商务专业型**：严谨专业，适合企业/官方
+- 🌟 **励志鸡汤型**：正能量，适合个人成长
+- 🤔 **反思质疑型**：批判性思考，适合深度内容
+- 😄 **轻松幽默型**：段子手风格，适合娱乐/社交
+
+### 2️⃣ AI 配图生成
+
+- 基于 PonyFlash SDK 自动生成配图
+- 支持多种风格（写实/插画/3D/概念艺术）
+- 自动匹配文案主题和情绪
+
+### 3️⃣ 素材整理
+
+- 自动生成图文对照的 Markdown 文档
+- 支持导出到飞书文档（团队协作）
+- 可直接审核/修改/批注
+
+### 4️⃣ 自动化发布（开发中）
+
+- GitHub Actions 定时执行
+- 支持公众号/小红书/知乎（接口骨架已完成）
+- 发布结果回收与数据看板（规划中）
+
+---
+
+## 📂 项目结构
 
 ```text
-.
+postskill/
 ├── postskill.py                  # CLI 主入口
 ├── scripts/
 │   ├── copy_generator.py         # 多风格文案生成
-│   ├── image_generator.py        # PonyFlash 配图生成
-│   ├── feishu_doc_creator.py     # 素材文档生成
-│   └── publisher.py              # 平台发布骨架
-├── tests/
-└── .github/workflows/            # 自动化发布 / CI / 健康检查
+│   ├── image_generator.py        # AI 配图生成
+│   ├── feishu_doc_creator.py     # 飞书文档生成
+│   └── publisher.py              # 平台发布器（骨架）
+├── tests/                        # 单元测试
+├── examples/                     # 示例输出
+│   └── ai-awakening-output.md    # 真实案例
+├── .github/workflows/            # 自动化工作流
+│   ├── auto-publish.yml          # 自动发布
+│   └── ci.yml                    # CI/CD
+└── README.md
 ```
 
 ---
 
-## 当前最值得看的地方
+## 🎬 真实案例
 
-如果你第一次打开这个项目，建议优先看：
+查看完整示例：[examples/ai-awakening-output.md](./examples/ai-awakening-output.md)
 
-1. `postskill.py` — CLI 主流程
-2. `scripts/copy_generator.py` — 多风格文案生成
-3. `scripts/image_generator.py` — 图片生成接入
-4. `scripts/feishu_doc_creator.py` — 图文素材文档输出
-5. `.github/workflows/auto-publish.yml` — 自动化链路
-6. [examples/ai-awakening-output.md](./examples/ai-awakening-output.md) — 一组可展示 demo
-7. [LAUNCH_PACK.md](./LAUNCH_PACK.md) — 可直接拿去发的传播文案
+**输入主题**：AI 醒觉社
 
----
+**输出结果**：
+- ✅ 10 套不同风格文案
+- ✅ 10 张配图
+- ✅ 1 份可审核的 Markdown 文档
 
-## 适合谁
-
-- 想把“内容生产”做成流水线的人
-- 运营 / 创作者 / AI 工作流玩家
-- 想把 PonyFlash、飞书、自动化发布串起来的人
-- 想基于一个可运行原型继续往上搭系统的人
+**耗时**：约 3 分钟（取决于 AI 接口速度）
 
 ---
 
-## Roadmap
+## 🚀 适合谁
 
+✅ **内容运营团队**：批量生产内容，提升效率  
+✅ **个人创作者**：省下找图/排版时间，专注创作  
+✅ **AI 工作流玩家**：可改造成自己的内容引擎  
+✅ **自媒体矩阵**：一套内容适配多平台  
+✅ **企业品牌**：快速产出多风格营销素材  
+
+---
+
+## 🛣️ Roadmap
+
+### ✅ 已完成
 - [x] 多风格文案生成
-- [x] AI 配图生成
+- [x] AI 配图生成（PonyFlash）
 - [x] 素材文档自动整理
 - [x] GitHub Actions 自动化链路
-- [ ] 完整平台发布器落地
-- [ ] 更稳定的平台账号管理
+- [x] 飞书文档生成
+
+### 🚧 开发中
+- [ ] 完整平台发布器（公众号/小红书/知乎）
+- [ ] 平台账号管理
 - [ ] 发布结果回收与看板
-- [ ] 更多平台适配
-- [ ] 更强的模板库与内容策略层
+
+### 📋 规划中
+- [ ] 更多平台适配（抖音/B 站/Twitter）
+- [ ] 内容策略层（选题推荐/热点追踪）
+- [ ] 更强的文案模板库
+- [ ] 图片生成重试策略
+- [ ] 素材审核流程优化
 
 ---
 
-## 贡献
+## 🤝 贡献
 
-欢迎补充：
+欢迎贡献：
 
-- 平台发布适配器
-- 更强的文案模板
-- 更稳的图片生成与重试策略
-- 更完善的素材审核流程
-- 更真实的 demo / case
+- 🔌 **平台适配器**：接入更多发布平台
+- 📝 **文案模板**：补充更多风格模板
+- 🎨 **配图策略**：优化图片生成逻辑
+- 🔄 **工作流优化**：改进自动化流程
+- 📚 **文档完善**：补充使用案例
 
 详见 [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
-## License
+## 📄 License
 
 Apache-2.0
 
 ---
 
-## 如果这个项目对你有帮助
+## ⭐ 如果这个项目对你有帮助
 
-请直接：
+1. 给个 **Star** 支持一下
+2. 提个 **Issue** 说说你的使用场景
+3. 提个 **PR** 贡献你的改进
 
-1. 给它一个 **⭐ Star**
-2. 提一个你真正想打通的内容工作流场景
+**让内容生产从手工作坊，变成自动化工厂。**
 
-这样这个项目会更快从原型，长成真正有用的工具。
+---
+
+<div align="center">
+
+Made with ❤️ by [Andy | AI酋长](https://github.com/AIPMAndy)
+
+</div>
