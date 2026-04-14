@@ -2,12 +2,18 @@
 """
 PostSkill - 文案生成模块
 基于主题生成多种风格的社交媒体文案
+支持对抗式生成（三 Agent 协作）
 """
 
 import json
 import os
 from typing import Dict, List, Optional
 import time
+
+try:
+    from scripts.adversarial_generator import AdversarialContentGenerator
+except ImportError:
+    AdversarialContentGenerator = None
 
 
 class CopyGenerator:
@@ -136,20 +142,38 @@ class CopyGenerator:
         },
     }
     
-    def __init__(self, api_key: Optional[str] = None, model: str = "gpt-4o-mini"):
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        model: str = "gpt-4o-mini",
+        use_adversarial: bool = False,
+        adversarial_iterations: int = 3,
+    ):
         """
         初始化文案生成器
         
         Args:
             api_key: OpenAI API Key
             model: 使用的模型
+            use_adversarial: 是否使用对抗式生成（三 Agent 协作）
+            adversarial_iterations: 对抗式生成的迭代次数
         """
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model
+        self.use_adversarial = use_adversarial
+        self.adversarial_iterations = adversarial_iterations
         self.client = None
+        self.adversarial_generator = None
         
         if self.api_key:
             self._init_client()
+            
+            # 初始化对抗式生成器
+            if self.use_adversarial and AdversarialContentGenerator:
+                self.adversarial_generator = AdversarialContentGenerator(
+                    api_key=self.api_key,
+                    model=self.model,
+                )
     
     def _init_client(self):
         """初始化 OpenAI 客户端"""
@@ -236,17 +260,32 @@ class CopyGenerator:
         
         # 调用 AI 生成
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": style_config["system_prompt"]},
-                    {"role": "user", "content": style_config["user_prompt"].format(topic=topic)}
-                ],
-                temperature=0.8,
-                max_tokens=500,
-            )
-            
-            content = response.choices[0].message.content.strip()
+            # 🔥 对抗式生成模式（三 Agent 协作）
+            if self.use_adversarial and self.adversarial_generator:
+                print("🔥 使用对抗式生成（三 Agent 协作）...")
+                result = self.adversarial_generator.generate(
+                    topic=topic,
+                    style=style,
+                    system_prompt=style_config["system_prompt"],
+                    user_prompt=style_config["user_prompt"],
+                    max_iterations=self.adversarial_iterations,
+                )
+                content = result["content"]
+                quality_score = result["final_score"]
+            else:
+                # 标准生成模式
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": style_config["system_prompt"]},
+                        {"role": "user", "content": style_config["user_prompt"].format(topic=topic)}
+                    ],
+                    temperature=0.8,
+                    max_tokens=500,
+                )
+                
+                content = response.choices[0].message.content.strip()
+                quality_score = self._evaluate_quality(content, style)
             
             # 生成标题
             title = self._generate_title(topic, style, content)
@@ -254,8 +293,6 @@ class CopyGenerator:
             # 生成标签
             tags = self._generate_tags(topic, style, platform)
             
-            # 质量评分
-            quality_score = self._evaluate_quality(content, style)
             
             return {
                 "style": style,

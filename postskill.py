@@ -53,7 +53,9 @@ def cli():
 @click.option('--dry-run', is_flag=True, help='测试模式（不实际生成图片）')
 @click.option('--concurrent', default=1, help='并发数（默认1，避免限流）')
 @click.option('--rate-limit', default=1.0, help='速率限制（秒/请求，默认1.0）')
-def run(topic, count, max_length, output, model, resolution, aspect_ratio, dry_run, concurrent, rate_limit):
+@click.option('--adversarial', is_flag=True, help='🔥 对抗式生成（三 Agent 协作，质量提升 30%+）')
+@click.option('--iterations', default=3, help='对抗式生成迭代次数（默认3）')
+def run(topic, count, max_length, output, model, resolution, aspect_ratio, dry_run, concurrent, rate_limit, adversarial, iterations):
     """一键生成高质量图文内容（v3.0 Self-Evolution 版）
     
     \b
@@ -69,6 +71,12 @@ def run(topic, count, max_length, output, model, resolution, aspect_ratio, dry_r
       
       # 并发生成（小心 API 限流）
       python postskill.py run -t "AI 创作" -c 10 --concurrent 2 --rate-limit 2.0
+      
+      # 🔥 对抗式生成（高质量模式）
+      python postskill.py run -t "AI 创作" --adversarial
+      
+      # 对抗式 + 自定义迭代
+      python postskill.py run -t "AI 创作" --adversarial --iterations 5
     """
     print(f"\n{'='*60}")
     print(f"🚀 PostSkill v3.0 - Self-Evolution AI 内容生产引擎")
@@ -77,6 +85,9 @@ def run(topic, count, max_length, output, model, resolution, aspect_ratio, dry_r
     print(f"   主题: {topic}")
     print(f"   数量: {count} 套")
     print(f"   字数: ≤{max_length}")
+    print(f"   模式: {'🔥 对抗式生成（三 Agent 协作）' if adversarial else '🤖 标准生成'}")
+    if adversarial:
+        print(f"   迭代: {iterations} 轮")
     print(f"   模型: {model}")
     print(f"   分辨率: {resolution}")
     print(f"   宽高比: {aspect_ratio}")

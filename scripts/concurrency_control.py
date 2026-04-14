@@ -221,7 +221,6 @@ if __name__ == "__main__":
         controller.add_task(
             task_id=f"task-{i:02d}",
             func=mock_task,
-            task_id=f"task-{i:02d}",
             duration=random.uniform(0.3, 0.8),
         )
     
