@@ -86,8 +86,8 @@ jobs:
         run: |
           python postskill.py run \
             --topic "AI醒觉社" \
-            --publish \
-            --platforms wechat,xiaohongshu
+            --count 5 \
+            --adversarial
       
       - name: Create success summary
         if: success()
