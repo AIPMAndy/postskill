@@ -3,7 +3,7 @@
 # 核心依赖
 click>=8.3.3
 openai>=1.0.0
-ponyflash>=0.1.0
+ponyflash>=0.2.2
 requests>=2.33.1
 
 # 可选依赖
